@@ -1,4 +1,6 @@
 ﻿using Domain.Entitys;
+using Domain.Enums;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -68,12 +70,75 @@ namespace Infraestructura.Productos
         {
             if (id <= 0)
             {
-                throw new ArgumentException($"El id {id}no e valido");
+                throw new ArgumentException($"El id {id} no es valido");
             }
 
             int index = GetIndexById(id);
 
             return index <= 0 ? null : productos[index];
+        }
+
+        public Product[] GetProductByMeasurent(UnidadDeMedida um)
+        {
+            Product[] tmp = null;
+            if(productos == null)
+            {
+                return tmp;
+            }
+            foreach (Product p in productos)
+            {
+                if (p.UnidadDeMedida == um)
+                {
+                    Add(p, ref tmp);
+                }
+            }
+            return tmp;
+        }
+
+        public Product[] GetProductBYCaducity(DateTime dt)
+        {
+            Product[] tmp = null;
+            if (productos == null)
+            {
+                return tmp;
+            }
+            foreach (Product p in productos)
+            {
+                if (p.FechaDeVencimiento.CompareTo(dt) <= 0)
+                {
+                    Add(p, ref tmp);
+                }
+            }
+            return tmp;
+        }
+
+        public Product[] GetProductByPriceRange(decimal e1, decimal e2)
+        {
+            Product[] tmp = null;
+            if (productos == null)
+            {
+                return tmp;
+            }
+
+            foreach (Product p in productos)
+            {
+                if (p.Precio >= e1 && p.Precio <= e2)
+                {
+                    Add(p, ref tmp);
+                }
+            }
+            return tmp;
+        }
+
+        public Product[] GetPrdoductOrdenByPrice()
+        {
+            Array.Sort(productos, new Product.PriceComparer);
+            return productos;
+        }
+
+        public string GetProductosAsJson()
+        {
+            return JsonConvert.SerializeObject(productos);
         }
         #endregion
 
