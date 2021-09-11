@@ -132,13 +132,18 @@ namespace Infraestructura.Productos
 
         public Product[] GetPrdoductOrdenByPrice()
         {
-            Array.Sort(productos, new Product.PriceComparer);
+            Array.Sort(productos, new ProductPriceComparer());
             return productos;
         }
 
-        public string GetProductosAsJson()
+        public string GetProductosAsJson(Product prods)
         {
-            return JsonConvert.SerializeObject(productos);
+            return JsonConvert.SerializeObject(prods);
+        }
+
+        public int GetLastProductId()
+        {
+            return productos == null ? 0 : productos[productos.Length - 1].Id;
         }
         #endregion
 
@@ -152,7 +157,7 @@ namespace Infraestructura.Productos
                 return;
             }
 
-            Product[] tmp = new Product[pds.Length * 1];
+            Product[] tmp = new Product[pds.Length + 1];
             Array.Copy(pds, tmp, pds.Length);
             tmp[tmp.Length - 1] = p;
             pds = tmp;

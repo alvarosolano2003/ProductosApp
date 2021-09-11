@@ -25,7 +25,7 @@ namespace Domain.Entitys
         public UnidadDeMedida UnidadDeMedida { get; set; }
     }
 
-    public class PriceComparer : IComparer<Product>
+    public class ProductPriceComparer : IComparer<Product>
     {
         public int Compare(Product e1, Product e2)
         {

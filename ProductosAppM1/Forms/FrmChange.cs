@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ProductosAppM1
+namespace ProductosAppM1.Forms
 {
-    public partial class Form1 : Form
+    public partial class FrmChange : Form
     {
-        public Form1()
+        public FrmChange()
         {
             InitializeComponent();
         }
